@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="GitHub Suite" verbose="3" thread-count="4">
+
+    <test name="GitHub Test" parallel="methods" group-by-instances="true">
+
+        <parameter name="browser" value="EDGE"/>
+        <parameter name="headless" value="false"/>
+        <parameter name="aut" value="GITHUB"/>
+
+        <packages>
+            <package name="com.hetacz.mendtask.tests"/>
+        </packages>
+    </test>
+</suite>
