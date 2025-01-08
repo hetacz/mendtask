@@ -4,15 +4,22 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.hetacz.mendtask.exceptions.ResponseProcessingException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.function.Function;
 
+@Slf4j
 @UtilityClass
 public class Utils {
 
@@ -48,5 +55,15 @@ public class Utils {
 
     public List<String> splitBySemicolon(String s) {
         return List.of(s.split(";"));
+    }
+
+    public <T> void validate(T data) {
+        try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+            Validator validator = factory.getValidator();
+            Set<ConstraintViolation<T>> violations = validator.validate(data);
+            violations.stream()
+                    .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+                    .forEach(log::warn);
+        }
     }
 }

@@ -17,5 +17,4 @@ public class CommonSteps {
         this.driver = driver;
         this.aut = aut;
     }
-
 }

@@ -24,18 +24,16 @@ public abstract class BasePage {
     WebDriverWait wait;
     WebDriver driver;
     ConfigService cs;
-    AutConfigService autConfig;
 
     @Inject
     protected BasePage(WebDriver driver) {
         this.driver = driver;
         this.cs = InjectorHolder.getConfigService();
-        this.autConfig = InjectorHolder.getAutConfigService();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(cs.getProperty("wait"))));
     }
 
     protected void load(AUT aut, String url) {
-        driver.get(autConfig.getProperty(aut, "base.url") + url);
+        driver.get(AutConfigService.getProperty(aut, "base.url") + url);
     }
 
     protected WebElement getClickableElement(By locator) {

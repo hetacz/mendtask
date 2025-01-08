@@ -3,7 +3,9 @@ package com.hetacz.mendtask.api;
 import com.google.inject.Inject;
 import com.hetacz.mendtask.constants.AUT;
 import com.hetacz.mendtask.service.AutConfigService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Headers;
 import okhttp3.MediaType;
@@ -11,6 +13,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 
 @Slf4j
+@FieldDefaults(level = AccessLevel.PUBLIC, makeFinal = true)
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class GitHubApi {
 
@@ -18,8 +21,7 @@ public class GitHubApi {
     private static final String HEADER_AUTH = "Authorization";
     private static final String HEADER_VERSION = "X-GitHub-Api-Version";
     private static final MediaType MEDIA_TYPE_JSON_UTF8 = MediaType.get("application/json;charset=utf-8");
-    public final ApiHelper apiHelper;
-    private final AutConfigService autConfig;
+    ApiHelper apiHelper;
 
     public Request getOctocat() {
         return new Request.Builder().url(apiHelper.getApiUrl() + "octocat")
@@ -43,14 +45,14 @@ public class GitHubApi {
     }
 
     public Request deleteRepo(String repoName) {
-        return new Request.Builder().url(apiHelper.getApiUrl() + "repos/" + autConfig.getProperty(AUT.GITHUB, "username") + "/" + repoName)
+        return new Request.Builder().url(apiHelper.getApiUrl() + "repos/" + AutConfigService.getProperty(AUT.GITHUB, "username") + "/" + repoName)
                 .headers(generateHeaders())
                 .delete()
                 .build();
     }
 
     public Request getPackageBilling() {
-        return new Request.Builder().url(apiHelper.getApiUrl() + "users/" + autConfig.getProperty(AUT.GITHUB, "username") + "/settings/billing/packages")
+        return new Request.Builder().url(apiHelper.getApiUrl() + "users/" + AutConfigService.getProperty(AUT.GITHUB, "username") + "/settings/billing/packages")
                 .headers(generateHeaders())
                 .get()
                 .build();

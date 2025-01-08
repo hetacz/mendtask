@@ -25,41 +25,24 @@ import java.util.function.Function;
 public class ApiHelper {
 
     ConfigService cs;
-    AutConfigService autConfig;
     ObjectMapper objectMapper;
     OkHttpClient client;
 
     public String getApiUrl() {
-        return autConfig.getProperty(cs.getAut(), "api.url");
+        return AutConfigService.getProperty(cs.getAut(), "api.url");
     }
 
     public String getApiToken() {
-        return autConfig.getProperty(cs.getAut(), "api.token");
+        return AutConfigService.getProperty(cs.getAut(), "api.token");
     }
-
-//    public String getApiUrl(AUT aut) {
-//        return autConfig.getProperty(aut, "api.url");
-//    }
-//
-//    public String getApiToken(AUT aut) {
-//        return autConfig.getProperty(aut, "api.token");
-//    }
 
     public String getApiVersion() {
-        return autConfig.getProperty(cs.getAut(), "api.version");
+        return AutConfigService.getProperty(cs.getAut(), "api.version");
     }
-
-//    public String getApiVersion(AUT aut) {
-//        return autConfig.getProperty(aut, "api.version");
-//    }
 
     public String getAcceptHeader() {
-        return autConfig.getProperty(cs.getAut(), "api.acceptHeader");
+        return AutConfigService.getProperty(cs.getAut(), "api.acceptHeader");
     }
-
-//    public String getAcceptHeader(AUT aut) {
-//        return autConfig.getProperty(aut, "api.acceptHeader");
-//    }
 
     public <T> CodeAndResponse<T> sendRequestAndSerializeResponse(Request request, Class<T> responseClass) {
         try (Response response = client.newCall(request).execute()) {

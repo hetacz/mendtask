@@ -1,5 +1,6 @@
 package com.hetacz.mendtask.service;
 
+import com.google.inject.Singleton;
 import com.hetacz.mendtask.constants.AUT;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -10,6 +11,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 @Slf4j
+@Singleton
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ConfigService {
 
@@ -38,8 +40,6 @@ public class ConfigService {
     }
 
     public AUT getAut() {
-        log.warn("AUT: {}", getProperty("aut"));
-        System.out.println("AUT: " + getProperty("aut"));
         return AUT.valueOf(getProperty("aut").toUpperCase());
     }
 }

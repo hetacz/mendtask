@@ -7,6 +7,8 @@ import java.util.Set;
 
 public interface AuthorizedActions {
 
+    AuthorizedActions load();
+
     String confirmLogin();
 
     List<String> getRepositories();

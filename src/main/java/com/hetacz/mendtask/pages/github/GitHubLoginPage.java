@@ -3,6 +3,7 @@ package com.hetacz.mendtask.pages.github;
 import com.hetacz.mendtask.constants.AUT;
 import com.hetacz.mendtask.pages.BasePage;
 import com.hetacz.mendtask.pages.Loadable;
+import com.hetacz.mendtask.service.AutConfigService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,7 @@ public class GitHubLoginPage extends BasePage implements Loadable<GitHubLoginPag
 
     public GitHubDashboardPage submitLogin() {
         getClickableElement(signInButton).click();
-        wait.until(ExpectedConditions.urlContains(autConfig.getProperty(AUT.GITHUB, "base.url")));
+        wait.until(ExpectedConditions.urlContains(AutConfigService.getProperty(AUT.GITHUB, "base.url")));
         return new GitHubDashboardPage(driver);
     }
 }
