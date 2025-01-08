@@ -8,7 +8,7 @@
         <parameter name="aut" value="GITHUB"/>
 
         <packages>
-            <package name="com.hetacz.mendtask.tests"/>
+            <package name="com.hetacz.mendtask.tests.github"/>
         </packages>
     </test>
 </suite>
