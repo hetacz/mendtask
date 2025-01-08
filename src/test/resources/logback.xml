@@ -1,23 +1,13 @@
 <configuration>
-    <appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>threadName</key>
-            <defaultValue>default</defaultValue>
-        </discriminator>
-        <sift>
-            <appender name="THREAD-${threadName}" class="ch.qos.logback.core.FileAppender">
-                <file>logs/log-${threadName}.log</file>
-                <append>true</append>
-                <encoder>
-                    <pattern>
-                        %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-                    </pattern>
-                </encoder>
-            </appender>
-        </sift>
+    <appender name="DEFAULT" class="ch.qos.logback.core.FileAppender">
+        <file>logs/log.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
     </appender>
 
     <root level="INFO">
-        <appender-ref ref="SIFT"/>
+        <appender-ref ref="DEFAULT"/>
     </root>
 </configuration>

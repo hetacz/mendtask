@@ -4,17 +4,20 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.hetacz.mendtask.constants.BrowserType;
 import com.hetacz.mendtask.service.ConfigService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 
 @Slf4j
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class WebDriverProvider {
 
-    private final ConfigService configService;
-    private final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    ConfigService configService;
+    ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     public WebDriver getDriver() {
         if (driver.get() == null) {

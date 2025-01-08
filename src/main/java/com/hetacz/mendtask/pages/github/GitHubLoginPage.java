@@ -1,6 +1,9 @@
 package com.hetacz.mendtask.pages.github;
 
 import com.hetacz.mendtask.pages.BasePage;
+import com.hetacz.mendtask.pages.Loadable;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -10,27 +13,29 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.Set;
 
 @Slf4j
-public class GitHubLoginPage extends BasePage {
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class GitHubLoginPage extends BasePage implements Loadable<GitHubLoginPage> {
 
-    private final By emailField = By.id("login_field");
-    private final By passwordField = By.id("password");
-    private final By signInButton = By.name("commit");
+    By emailField = By.id("login_field");
+    By passwordField = By.id("password");
+    By signInButton = By.name("commit");
 
     public GitHubLoginPage(WebDriver driver) {
         super(driver);
     }
 
+    @Override
     public GitHubLoginPage load() {
         load("login");
         return this;
     }
 
-    public GitHubLoginPage typeEmail(String email) {
+    public GitHubLoginPage fillEmail(String email) {
         getVisibleElement(emailField).sendKeys(email);
         return this;
     }
 
-    public GitHubLoginPage typePassword(String password) {
+    public GitHubLoginPage fillPassword(String password) {
         getVisibleElement(passwordField).sendKeys(password);
         return this;
     }

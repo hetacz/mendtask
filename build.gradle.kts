@@ -28,6 +28,9 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.14")
     testImplementation("org.assertj:assertj-core:3.27.2")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.18.2")
+    implementation("org.hibernate.validator:hibernate-validator:9.0.0.CR1")
+    testImplementation("org.glassfish:jakarta.el:5.0.0-M1")
 }
 
 tasks.test {
