@@ -8,6 +8,7 @@ import com.hetacz.mendtask.di.SeleniumModule;
 import com.hetacz.mendtask.driver.WebDriverProvider;
 import com.hetacz.mendtask.pages.github.GitHubLoginPage;
 import com.hetacz.mendtask.responses.CodeAndResponse;
+import com.hetacz.mendtask.service.AutConfigService;
 import com.hetacz.mendtask.service.ConfigService;
 import com.hetacz.mendtask.utils.Utils;
 import lombok.AccessLevel;
@@ -33,7 +34,9 @@ public abstract class BaseTest {
 
     private static final Map<AUT, Set<Cookie>> COOKIES_MAP = new EnumMap<>(AUT.class);
     @Inject
-    protected ConfigService configService;
+    protected ConfigService cs;
+    @Inject
+    protected AutConfigService autConfig;
     @Inject
     WebDriverProvider driverProvider;
     @Inject
@@ -53,27 +56,27 @@ public abstract class BaseTest {
             System.setProperty("aut", xmlAut.toUpperCase());
         }
         System.setProperty("headless", String.valueOf(xmlHeadless));
+        autConfig.loadProperties(cs.getAut());
     }
 
     @BeforeTest(dependsOnMethods = "beforeTest", groups = "github-ui")
     public void getLoginCookies() {
         GitHubLoginPage loginPage = new GitHubLoginPage(driver());
         Set<Cookie> cookies = loginPage.load()
-                .fillEmail(configService.getPlatformProperty("email"))
-                .fillPassword(configService.getPlatformProperty("password"))
+                .fillEmail(autConfig.getProperty(cs.getAut(), "email"))
+                .fillPassword(autConfig.getProperty(cs.getAut(), "password"))
                 .submitLogin()
                 .getLoginCookies();
-
         COOKIES_MAP.put(AUT.GITHUB, cookies);
         driverProvider.cleanupDriver();
     }
 
-    @BeforeTest(alwaysRun = true)
+    @BeforeTest(groups = "github")
     public void cleanUpData() {
         Request getRepoList = gitHubApi.getRepoList();
         CodeAndResponse<List<String>> response = gitHubApi.apiHelper.sendRequestAndParseResponse(getRepoList, Utils.REPO_NAME_EXTRACTOR);
         Assertions.assertThat(response.code()).isEqualTo(200);
-        List<String> reposToKeep = configService.getReposToKeep();
+        List<String> reposToKeep = Utils.splitBySemicolon(autConfig.getProperty(cs.getAut(), "keep"));
         response.body().stream()
                 .filter(repo -> !reposToKeep.contains(repo))
                 .forEach(repo -> {
@@ -85,7 +88,7 @@ public abstract class BaseTest {
 
     @BeforeMethod(groups = "github-ui")
     public void injectGitHubCookies() {
-        driver().get(configService.getPlatformProperty("base.url"));
+        driver().get(autConfig.getProperty(cs.getAut(), "base.url"));
         COOKIES_MAP.get(AUT.GITHUB).forEach(cookie -> driver().manage().addCookie(cookie));
         driver().navigate().refresh();
     }

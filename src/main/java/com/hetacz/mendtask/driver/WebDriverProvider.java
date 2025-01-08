@@ -16,15 +16,13 @@ import org.openqa.selenium.WebDriver;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class WebDriverProvider {
 
-    ConfigService configService;
+    ConfigService cs;
     ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     public WebDriver getDriver() {
         if (driver.get() == null) {
             driver.set(createWebDriver());
-            log.info("Inside create driver if {} {}", driver.get().hashCode(), Thread.currentThread().getName());
         }
-        log.info("Getting driver in thread: {}", Thread.currentThread().getName());
         return driver.get();
     }
 
@@ -42,8 +40,8 @@ public class WebDriverProvider {
     }
 
     private WebDriver createWebDriver() {
-        BrowserType browserType = BrowserType.valueOf(configService.getProperty("browser", BrowserType.CHROME.toString()));
-        boolean headless = Boolean.parseBoolean(configService.getProperty("headless", "false"));
+        BrowserType browserType = BrowserType.valueOf(cs.getProperty("browser", BrowserType.CHROME.toString()));
+        boolean headless = Boolean.parseBoolean(cs.getProperty("headless", "false"));
         return headless
                 ? WebDriverFactory.getManager(browserType).createDriverHeadless()
                 : WebDriverFactory.getManager(browserType).createDriver();

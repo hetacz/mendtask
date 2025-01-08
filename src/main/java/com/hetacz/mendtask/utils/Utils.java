@@ -45,4 +45,8 @@ public class Utils {
     public boolean isNullOrBlank(String s) {
         return s == null || s.isBlank();
     }
+
+    public List<String> splitBySemicolon(String s) {
+        return List.of(s.split(";"));
+    }
 }

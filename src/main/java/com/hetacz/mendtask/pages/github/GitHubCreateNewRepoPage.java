@@ -1,5 +1,6 @@
 package com.hetacz.mendtask.pages.github;
 
+import com.hetacz.mendtask.constants.AUT;
 import com.hetacz.mendtask.pages.BasePage;
 import com.hetacz.mendtask.pages.Loadable;
 import lombok.AccessLevel;
@@ -20,7 +21,7 @@ public class GitHubCreateNewRepoPage extends BasePage implements Loadable<GitHub
 
     @Override
     public GitHubCreateNewRepoPage load() {
-        load("new");
+        load(AUT.GITHUB, "new");
         return this;
     }
 

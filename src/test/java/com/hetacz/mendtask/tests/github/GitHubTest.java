@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
+@Test(groups = "github")
 public class GitHubTest extends BaseTest {
 
     @Inject
@@ -46,7 +47,6 @@ public class GitHubTest extends BaseTest {
         CodeAndResponse<BillingPackages> response = gitHubApi.apiHelper.sendRequestAndSerializeResponse(request, BillingPackages.class);
         Assertions.assertThat(response.code()).isEqualTo(200);
         validate(response.body());
-        System.out.println(response.body());
     }
 
     @Test(groups = "github-ui")

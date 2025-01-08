@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.hetacz.mendtask.exceptions.ApiException;
 import com.hetacz.mendtask.exceptions.ResponseProcessingException;
 import com.hetacz.mendtask.responses.CodeAndResponse;
+import com.hetacz.mendtask.service.AutConfigService;
 import com.hetacz.mendtask.service.ConfigService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,25 +24,42 @@ import java.util.function.Function;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ApiHelper {
 
-    ConfigService configService;
+    ConfigService cs;
+    AutConfigService autConfig;
     ObjectMapper objectMapper;
     OkHttpClient client;
 
     public String getApiUrl() {
-        return configService.getPlatformProperty("api.url");
+        return autConfig.getProperty(cs.getAut(), "api.url");
     }
 
     public String getApiToken() {
-        return configService.getPlatformProperty("api.token");
+        return autConfig.getProperty(cs.getAut(), "api.token");
     }
+
+//    public String getApiUrl(AUT aut) {
+//        return autConfig.getProperty(aut, "api.url");
+//    }
+//
+//    public String getApiToken(AUT aut) {
+//        return autConfig.getProperty(aut, "api.token");
+//    }
 
     public String getApiVersion() {
-        return configService.getPlatformProperty("api.version");
+        return autConfig.getProperty(cs.getAut(), "api.version");
     }
 
+//    public String getApiVersion(AUT aut) {
+//        return autConfig.getProperty(aut, "api.version");
+//    }
+
     public String getAcceptHeader() {
-        return configService.getPlatformProperty("api.acceptHeader");
+        return autConfig.getProperty(cs.getAut(), "api.acceptHeader");
     }
+
+//    public String getAcceptHeader(AUT aut) {
+//        return autConfig.getProperty(aut, "api.acceptHeader");
+//    }
 
     public <T> CodeAndResponse<T> sendRequestAndSerializeResponse(Request request, Class<T> responseClass) {
         try (Response response = client.newCall(request).execute()) {

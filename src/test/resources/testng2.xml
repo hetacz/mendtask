@@ -11,15 +11,4 @@
             <package name="com.hetacz.mendtask.tests.github"/>
         </packages>
     </test>
-
-    <test name="Gitlab Test" parallel="methods">
-
-        <parameter name="browser" value="FIREFOx"/>
-        <parameter name="headless" value="false"/>
-        <parameter name="aut" value="gitlaB"/>
-
-        <packages>
-            <package name="com.hetacz.mendtask.tests.gitlab"/>
-        </packages>
-    </test>
 </suite>

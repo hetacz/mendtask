@@ -1,6 +1,8 @@
 package com.hetacz.mendtask.pages;
 
 import com.google.inject.Inject;
+import com.hetacz.mendtask.constants.AUT;
+import com.hetacz.mendtask.service.AutConfigService;
 import com.hetacz.mendtask.service.ConfigService;
 import com.hetacz.mendtask.utils.InjectorHolder;
 import lombok.AccessLevel;
@@ -21,18 +23,19 @@ public abstract class BasePage {
 
     WebDriverWait wait;
     WebDriver driver;
-    ConfigService configService;
+    ConfigService cs;
+    AutConfigService autConfig;
 
     @Inject
     protected BasePage(WebDriver driver) {
         this.driver = driver;
-        this.configService = InjectorHolder.getConfigService();
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(configService.getProperty("defaultWait"))));
-        log.info("Driver hash in test: {}", driver.hashCode());
+        this.cs = InjectorHolder.getConfigService();
+        this.autConfig = InjectorHolder.getAutConfigService();
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(cs.getProperty("wait"))));
     }
 
-    protected void load(String url) {
-        driver.get(configService.getPlatformProperty("base.url") + url);
+    protected void load(AUT aut, String url) {
+        driver.get(autConfig.getProperty(aut, "base.url") + url);
     }
 
     protected WebElement getClickableElement(By locator) {

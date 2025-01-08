@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 
 @Slf4j
@@ -39,21 +37,9 @@ public class ConfigService {
         return value != null ? value : defaultValue;
     }
 
-    public String getPlatformProperty(String key) {
-        return getProperty(getAUT() + "." + key);
-    }
-
-    public String getPlatformProperty(String key, String defaultValue) {
-        return getProperty(getAUT() + "." + key, defaultValue);
-    }
-
-    public List<String> getReposToKeep() {
-        return Arrays.stream(getProperty(getAUT() + "." + "keep").split(";")).toList();
-    }
-
-    private String getAUT() {
-        String systemProperty = System.getProperty("aut");
-        String stringProperty = systemProperty != null ? systemProperty : properties.getProperty("aut");
-        return AUT.valueOf(stringProperty).toString().toLowerCase();
+    public AUT getAut() {
+        log.warn("AUT: {}", getProperty("aut"));
+        System.out.println("AUT: " + getProperty("aut"));
+        return AUT.valueOf(getProperty("aut").toUpperCase());
     }
 }

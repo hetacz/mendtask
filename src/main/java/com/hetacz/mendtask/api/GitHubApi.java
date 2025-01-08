@@ -1,7 +1,8 @@
 package com.hetacz.mendtask.api;
 
 import com.google.inject.Inject;
-import com.hetacz.mendtask.service.ConfigService;
+import com.hetacz.mendtask.constants.AUT;
+import com.hetacz.mendtask.service.AutConfigService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Headers;
@@ -18,7 +19,7 @@ public class GitHubApi {
     private static final String HEADER_VERSION = "X-GitHub-Api-Version";
     private static final MediaType MEDIA_TYPE_JSON_UTF8 = MediaType.get("application/json;charset=utf-8");
     public final ApiHelper apiHelper;
-    private final ConfigService configService;
+    private final AutConfigService autConfig;
 
     public Request getOctocat() {
         return new Request.Builder().url(apiHelper.getApiUrl() + "octocat")
@@ -42,14 +43,14 @@ public class GitHubApi {
     }
 
     public Request deleteRepo(String repoName) {
-        return new Request.Builder().url(apiHelper.getApiUrl() + "repos/" + configService.getPlatformProperty("username") + "/" + repoName)
+        return new Request.Builder().url(apiHelper.getApiUrl() + "repos/" + autConfig.getProperty(AUT.GITHUB, "username") + "/" + repoName)
                 .headers(generateHeaders())
                 .delete()
                 .build();
     }
 
     public Request getPackageBilling() {
-        return new Request.Builder().url(apiHelper.getApiUrl() + "users/" + configService.getPlatformProperty("username") + "/settings/billing/packages")
+        return new Request.Builder().url(apiHelper.getApiUrl() + "users/" + autConfig.getProperty(AUT.GITHUB, "username") + "/settings/billing/packages")
                 .headers(generateHeaders())
                 .get()
                 .build();
