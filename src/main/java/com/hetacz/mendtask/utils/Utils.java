@@ -15,38 +15,42 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.function.BiFunction;
+import java.util.random.RandomGenerator;
 
 @Slf4j
 @UtilityClass
 public class Utils {
 
-    private final Random RANDOM = new Random();
+    public final RandomGenerator RANDOM = RandomGenerator.getDefault();
+
     private final JsonFactory JSON_FACTORY = new JsonFactory();
 
-    public final Function<Reader, List<String>> REPO_NAME_EXTRACTOR = (reader) -> {
-        List<String> repoNames = new ArrayList<>();
+    public final BiFunction<Reader, String, List<String>> RESPONSE_EXTRACTOR = (reader, fieldName) -> {
+        List<String> fieldValues = new ArrayList<>();
         try (JsonParser jsonParser = JSON_FACTORY.createParser(reader)) {
             while (!jsonParser.isClosed()) {
                 JsonToken token = jsonParser.nextToken();
                 if (token == null) {
                     break;
                 }
-                if (token == JsonToken.FIELD_NAME && jsonParser.currentName().equals("name")) {
+                if (token == JsonToken.FIELD_NAME && jsonParser.currentName().equals(fieldName)) {
                     jsonParser.nextToken();
-                    repoNames.add(jsonParser.getValueAsString());
+                    String value = jsonParser.getValueAsString();
+                    if (value != null) {
+                        fieldValues.add(value);
+                    }
                 }
             }
         } catch (IOException e) {
             throw new ResponseProcessingException(e.getMessage(), e.getCause());
         }
-        return repoNames;
+        return fieldValues;
     };
 
     public String generateTestRepoName() {
-        return "TestRepo-" + System.currentTimeMillis() + "-" + new Random().nextInt(1_000);
+        return "TestRepo-" + System.currentTimeMillis() + "-" + RANDOM.nextInt(1_000);
     }
 
     public boolean isNullOrBlank(String s) {

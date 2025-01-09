@@ -6,6 +6,7 @@ import com.hetacz.mendtask.service.AutConfigService;
 import com.hetacz.mendtask.service.ConfigService;
 import com.hetacz.mendtask.utils.InjectorHolder;
 import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -18,6 +19,7 @@ import java.time.Duration;
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 @FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
 public abstract class BasePage {
 
@@ -25,7 +27,6 @@ public abstract class BasePage {
     WebDriver driver;
     ConfigService cs;
 
-    @Inject
     protected BasePage(WebDriver driver) {
         this.driver = driver;
         this.cs = InjectorHolder.getConfigService();

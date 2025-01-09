@@ -12,7 +12,7 @@ public interface ApiActions {
 
     CodeAndResponse<List<String>> createRepo(String repoName);
 
-    CodeAndResponse<List<String>> deleteRepo(String repoName);
+    int deleteRepo(String repoName);
 
     CodeAndResponse<?> getBillingInfo();
 }

@@ -2,7 +2,7 @@ package com.hetacz.mendtask.pages;
 
 public interface CreateRepoActions {
 
-    CreateRepoActions load();
+    CreateRepoActions openRepoCreator();
 
     String createNewRepo(String repoName);
 }

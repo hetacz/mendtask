@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 public class SeleniumModule extends AbstractModule {
 
     @Provides
-    public WebDriver provideWebDriver(WebDriverProvider provider) {
+    public static WebDriver provideWebDriver(WebDriverProvider provider) {
         return provider.getDriver();
     }
 }

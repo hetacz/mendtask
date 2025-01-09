@@ -7,9 +7,9 @@ import java.util.Set;
 
 public interface AuthorizedActions {
 
-    AuthorizedActions load();
+    AuthorizedActions openDashboard();
 
-    String confirmLogin();
+    String getLoginProof();
 
     List<String> getRepositories();
 

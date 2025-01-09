@@ -51,15 +51,10 @@ public class GitHubDashboardPage extends BasePage implements Loadable<GitHubDash
     }
 
     private Cookie getHostCookie(Set<Cookie> cookies) {
-        return cookies.stream()
-                .filter(cookie -> cookie.getName().contains("__Host-"))
-                .findAny()
-                .orElseThrow();
+        return cookies.stream().filter(cookie -> cookie.getName().contains("__Host-")).findAny().orElseThrow();
     }
 
     private Cookie buildSanitizedHostCookie(Cookie hostCookie) {
-        return new Cookie.Builder(hostCookie.getName(), hostCookie.getValue()).path("/")
-                .isSecure(true)
-                .build();
+        return new Cookie.Builder(hostCookie.getName(), hostCookie.getValue()).path("/").isSecure(true).build();
     }
 }
