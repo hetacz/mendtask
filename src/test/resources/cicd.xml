@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="CI CD Suite" verbose="3" thread-count="4">
+<suite name="CI CD Suite" verbose="3" thread-count="2">
 
     <test name="GitHub API Tests" parallel="methods" group-by-instances="true">
 
