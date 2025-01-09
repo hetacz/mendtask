@@ -18,7 +18,7 @@ public class AutConfigService {
     private final Map<AUT, Properties> AUT_PROPERTIES_MAP = new EnumMap<>(AUT.class);
 
     static {
-        Arrays.stream(AUT.values()).forEach(aut -> loadProperties(aut));
+        Arrays.stream(AUT.values()).forEach(AutConfigService::loadProperties);
     }
 
     public String getProperty(AUT aut, String key) {
