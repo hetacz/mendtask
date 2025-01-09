@@ -3,9 +3,9 @@
 
     <test name="GitHub Test" parallel="methods" group-by-instances="true">
 
-        <parameter name="browser" value="EDGE"/>
+        <parameter name="browser" value="edge"/>
         <parameter name="headless" value="false"/>
-        <parameter name="aut" value="GITHUB"/>
+        <parameter name="aut" value="github"/>
 
         <packages>
             <package name="com.hetacz.mendtask.tests.github"/>

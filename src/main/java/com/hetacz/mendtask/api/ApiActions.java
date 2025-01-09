@@ -1,5 +1,6 @@
 package com.hetacz.mendtask.api;
 
+import com.hetacz.mendtask.responses.BillingPackages;
 import com.hetacz.mendtask.responses.CodeAndResponse;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface ApiActions {
 
     int deleteRepo(String repoName);
 
-    CodeAndResponse<?> getBillingInfo();
+    CodeAndResponse<BillingPackages> getBillingInfo();
 }

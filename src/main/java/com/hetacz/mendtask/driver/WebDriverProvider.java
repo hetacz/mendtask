@@ -7,10 +7,8 @@ import com.hetacz.mendtask.service.ConfigService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 
-@Slf4j
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -27,15 +25,9 @@ public class WebDriverProvider {
     }
 
     public void cleanupDriver() {
-        try {
-            if (driver.get() != null) {
-                driver.get().quit();
-                driver.remove();
-            } else {
-                log.warn("Driver is null");
-            }
-        } catch (Exception e) {
-            log.warn("Driver in illegal state.", e);
+        if (driver.get() != null) {
+            driver.get().quit();
+            driver.remove();
         }
     }
 

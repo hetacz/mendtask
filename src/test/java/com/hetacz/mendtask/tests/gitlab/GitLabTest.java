@@ -17,25 +17,25 @@ public class GitLabTest extends BaseTest {
 
     @Test
     public void test() throws InterruptedException {
-        Thread.sleep(Utils.RANDOM.nextLong(5_000));
+        Thread.sleep(Utils.RANDOM.nextLong(1_000));
         driver().get(baseUrl);
-        Thread.sleep(Utils.RANDOM.nextLong(5_000));
+        Thread.sleep(Utils.RANDOM.nextLong(1_000));
         Assertions.assertThat(driver().getCurrentUrl()).contains("about");
     }
 
     @Test
     public void test2() throws InterruptedException {
-        Thread.sleep(Utils.RANDOM.nextLong(5_000));
+        Thread.sleep(Utils.RANDOM.nextLong(1_000));
         driver().get(baseUrl);
-        Thread.sleep(Utils.RANDOM.nextLong(5_000));
+        Thread.sleep(Utils.RANDOM.nextLong(1_000));
         Assertions.assertThat(driver().getCurrentUrl()).contains("gitlab");
     }
 
     @Test
     public void test3() throws InterruptedException {
-        Thread.sleep(Utils.RANDOM.nextLong(5_000));
+        Thread.sleep(Utils.RANDOM.nextLong(1_000));
         driver().get(baseUrl);
-        Thread.sleep(Utils.RANDOM.nextLong(5_000));
+        Thread.sleep(Utils.RANDOM.nextLong(1_000));
         Assertions.assertThat(driver().getCurrentUrl()).contains("com");
     }
 }

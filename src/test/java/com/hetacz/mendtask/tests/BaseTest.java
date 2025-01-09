@@ -15,7 +15,6 @@ import com.hetacz.mendtask.steps.UiGithubSteps;
 import com.hetacz.mendtask.utils.Utils;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -31,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Guice(modules = {ApiModule.class, SeleniumModule.class})
 public abstract class BaseTest {
